@@ -1,20 +1,6 @@
 ### 2019/04/18
 
-windows快捷键
-
-**win + shift + s** 截屏
-
-**win + 数字1** 快速打开任务栏第一个窗口，再按最小化，其他同理
-
-**win + tab** 切换任务窗口
-
-xshell快捷键
-
-**alt + 数字1** 快速打开第一个会话，其他同理
-
-**alt + 菜单栏指示字母** 选中对应选项，下拉列表提示字母操作
-
-e. g. ：alt + t 打开工具；k 打开发送当前键入到所有会话
+置顶内容
 
 #### today & before
 
@@ -24,13 +10,17 @@ e. g. ：alt + t 打开工具；k 打开发送当前键入到所有会话
 
 2. 做win10专业版系统盘，重装电脑，装上git，typora，idea或者VScode，VMware，xshell，xftp，chrome
 
-   **延误2天**
+   **延误2天**  
 
-   **准备工作完成，4.16晚上**
+   <FIRST : DDL or delay time>
 
-   **4.16晚上，备份原电脑的内容，4.17晚上**
+   **4.16晚上，准备工作完成；备份原电脑的内容，4.17晚上**
 
-   **4.18中午，DONE**
+     <SECOND : following event process AND next step with DDL>  
+
+   **4.18中午，DONE**  
+
+   <THIRD : mrak down while you finsh>
 
 3. 准备四台虚拟机，安装docker，ceph，，minio，nfs，s3fs，aws；测试手册上的各种命令
 
@@ -38,7 +28,7 @@ e. g. ：alt + t 打开工具；k 打开发送当前键入到所有会话
 
    **4.17，创建四台虚拟机，部署热磁集群**
 
-   **4.18，ceph，docker完毕；剩余nfs和s3fs，4.19**
+   **4.18，遇到问题，详见热磁部署文档**
 
 4. 浏览lakefs，datalakev2，newdam，nas的源码，结合代码，清楚以上项目的运行流程
 
