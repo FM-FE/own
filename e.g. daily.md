@@ -12,15 +12,15 @@
 
    **延误2天**  
 
-   <FIRST : DDL or delay time>
+   >  FIRST : DDL or delay time
 
    **4.16晚上，准备工作完成；备份原电脑的内容，4.17晚上**
 
-     <SECOND : following event process AND next step with DDL>  
+   > SECOND : following event process AND next step with DDL> 
 
    **4.18中午，DONE**  
 
-   <THIRD : mrak down while you finsh>
+   >  THIRD : mrak down while you finsh
 
 3. 准备四台虚拟机，安装docker，ceph，，minio，nfs，s3fs，aws；测试手册上的各种命令
 
