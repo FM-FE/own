@@ -10,13 +10,13 @@
 
 2. 做win10专业版系统盘，重装电脑，装上git，typora，idea或者VScode，VMware，xshell，xftp，chrome
 
-   **延误2天**  
+   **原定 4.13**  
 
    >  FIRST : DDL or delay time
 
    **4.16晚上，准备工作完成；备份原电脑的内容，4.17晚上**
 
-   > SECOND : following event process AND next step with DDL> 
+   > SECOND : following event process AND next step with DDL
 
    **4.18中午，DONE**  
 
