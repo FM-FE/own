@@ -22,3 +22,7 @@
 1. git push origin master
 
    将本地仓库提交到远程仓库的master分支
+   
+2. git push -f origin master
+
+   当本地分支和远程分支不匹配时，强制推送，更新远程仓库
