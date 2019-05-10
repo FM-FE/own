@@ -78,3 +78,14 @@
 2. git push -f origin master
 
    当本地分支和远程分支不匹配时，强制推送，更新远程仓库
+   
+3. git remote add origin [git@IP ADDRESS:REPO.git]
+
+   添加远程仓库
+
+   如果希望使用 git clone，需要把本地rsa公钥复制到Git
+
+   [添加远程仓库参考链接](<https://www.liaoxuefeng.com/wiki/896043488029600/898732864121440>)
+
+   [复制公钥参考链接](<https://www.liaoxuefeng.com/wiki/896043488029600/896954117292416>)
+
