@@ -26,11 +26,11 @@
 
 4. 准备mongo镜像，运行mongo容器
 
-   ` docker run -d -p 27017:27017 -v /root/mnt/:/data/db --name mongo mongo`
+   ` docker run -d -p 27017:27017 -v /root/mongo/:/data/db --name mongo mongo`
 
 5. 执行lakefs，测试s3
 
-   `./lakefs --tier-type=das3 --mount-point /root/mnt/ --fast-root-path=/root/fast/ --cleanup-interval=10 --transit-interval=10 --admin-listen-addr=http://10.2.174.54:5000 --s3-endpoint http://123.177.21.80:8004 --s3-ak system --s3-sk 123456 --s3-bucket das3test --debug 1`
+   `./lakefs --tier-type=das3 --mount-point /root/mnt/ --fast-root-path=/root/fast/ --cleanup-interval=10 --transit-interval=10 --admin-listen-addr=http://10.2.174.121:5000 --s3-endpoint http://123.177.21.80:8004 --s3-ak system --s3-sk 123456 --s3-bucket das3test --debug 1`
    
 6. 指定文件，以及行为和时间
 
