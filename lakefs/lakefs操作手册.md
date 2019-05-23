@@ -30,17 +30,25 @@
 
 5. 执行lakefs，测试s3
 
-   `./lakefs --tier-type=das3 --mount-point /root/mnt/ --fast-root-path=/root/fast/ --cleanup-interval=10 --transit-interval=10 --admin-listen-addr=http://10.2.174.121:5000 --s3-endpoint http://123.177.21.80:8004 --s3-ak system --s3-sk 123456 --s3-bucket das3test --debug 1`
+   `./lakefs --tier-type=das3 --mount-point /root/mnt/ --fast-root-path=/root/fast/ --cleanup-interval=10 --transit-interval=10 --admin-listen-addr=http://10.2.174.121:5000 --s3-endpoint http://123.177.21.80:8004 --s3-ak system --s3-sk 123456 --s3-bucket demo --debug 1`
    
-6. 指定文件，以及行为和时间
+6. 在mnt目录下，创建文件
 
-   `./set.sh /root/mnt/1.txt migrate 10`
+   `dd if=/dev/zero of=文件名 bs=循环量（<空闲内存数） count=循环次数`
 
-7. 查看执行lakefs后输出的log
+   创建指定大小的文件
+
+   e.g.创建500M文件： `dd if=/dev/zero of=500M bs=500M count=1`
+
+7. 指定文件，以及行为和时间
+
+   `./set.sh /root/mnt/100 migrate 10`
+
+8. 查看执行lakefs后输出的log
 
    
 
-8. 进入mongo查看inode信息
+9. 进入mongo查看inode信息
 
 
 
