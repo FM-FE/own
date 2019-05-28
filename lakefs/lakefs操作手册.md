@@ -38,7 +38,7 @@
 
    创建指定大小的文件
 
-   e.g.创建500M文件： `dd if=/dev/zero of=500M bs=500M count=1`
+   e.g. 创建500M文件： `dd if=/dev/zero of=500M bs=500M count=1`
 
 7. 指定文件，以及行为和时间
 
