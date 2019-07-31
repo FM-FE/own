@@ -18,6 +18,11 @@
 
    >  `-t` ，添加image标签
    >
-   > 最后 `docker/elasticsearch` ，指定 dockerfile 的文件位置
+   >  最后 `docker/elasticsearch` ，指定 dockerfile 的文件位置
+   >
+   >  “ . ” 表示当前路径
 
 4. 制作 docker image 之后，通过 docker run 命令运行容器
+
+
+
