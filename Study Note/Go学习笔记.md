@@ -37,7 +37,7 @@
 
 4. interface
 
-   
+   如果interface中有多个函数，struct可以只实现部分函数，不必全部实现
 
 5. mgolock的作用
 
