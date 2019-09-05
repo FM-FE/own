@@ -18,4 +18,13 @@ Typora 学习笔记
 
    方向键 ↓ ，跳转到下一行输入
 
+4. 内容折叠
+
+   可以通过HTML实现内容折叠
+
+   <details>
+       <summary>展开查看折叠内容</summary>
+       折叠内容（折叠部分不支持md语法）
+   </details>
+
    
