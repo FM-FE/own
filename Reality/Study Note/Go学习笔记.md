@@ -1,5 +1,7 @@
 ## Go学习笔记
 
+**golang项目：封装一个删除slice元素的最优方法，用pprof比较性能**
+
 1. Mutex互斥锁
 
    [参考（概念演示）](https://shockerli.net/post/golang-pkg-mutex/)

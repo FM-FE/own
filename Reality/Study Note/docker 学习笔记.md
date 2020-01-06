@@ -1,18 +1,24 @@
 ### docker 学习笔记
 
-1. image 导出为 tar 文件
+1. 修改docker镜像的tag
+
+   `docker tag [imageID] REPOSITORY:TAG`
+
+   例：`docker tag 96c120fadccf portal:latest`
+
+2. image 导出为 tar 文件
 
    `docker save [image:tag] > [image.tar]`
 
    `docker save [image:tag] -o [image.tar]`
 
-2. 导入image.tar
+3. 导入image.tar
 
    `docker load < [image.tar]`
 
    `docker load -i [image.tar]`
-   
-3. 通过dockerfile制作image
+
+4. 通过dockerfile制作image
 
    `docker build -t elasticsearch docker/elasticsearch`
 
@@ -22,6 +28,6 @@
    >
    >  “ . ” 表示当前路径
 
-4. 制作 docker image 之后，通过 docker run 命令运行容器
+5. 制作 docker image 之后，通过 docker run 命令运行容器
 
 

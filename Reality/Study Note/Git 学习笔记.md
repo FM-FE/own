@@ -88,3 +88,23 @@
    [添加远程仓库参考链接](<https://www.liaoxuefeng.com/wiki/896043488029600/898732864121440>)
 
    [复制公钥参考链接](<https://www.liaoxuefeng.com/wiki/896043488029600/896954117292416>)
+
+
+
+
+
+### 处理冲突
+
+git statsh 
+
+git pull
+
+git stash pop
+
+
+
+### 强制回退到本地或远程的某个commit
+
+1. `git log` 或 `git log origin/master` 查看commit id
+
+2. `git reset --hard “commit id”`
