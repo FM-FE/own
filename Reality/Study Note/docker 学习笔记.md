@@ -30,4 +30,13 @@
 
 5. 制作 docker image 之后，通过 docker run 命令运行容器
 
+6. 删除无用docker镜像
 
+   `docker rmi $(docker images | grep none | awk '{print $3}')`
+
+   + $(xxxx)：将xxxx作为参数，传入docker rmi
+   + awk '{print $3}'：输出第三列
+
+7. 获取某行某列
+
+   ![image-20200120113157165](C:\Users\Jarvis.LAPTOP-HV4II8QE\AppData\Roaming\Typora\typora-user-images\image-20200120113157165.png)
