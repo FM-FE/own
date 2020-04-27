@@ -85,6 +85,8 @@ smb下载安装完成后，会自动生成配置文件/etc/samba/smb.conf
 
 客户端系统信息： win10
 
+### 基本操作
+
 1. 准备工作
 
    关闭win 10专用网络防火墙
@@ -103,7 +105,10 @@ smb下载安装完成后，会自动生成配置文件/etc/samba/smb.conf
 
    ![image-20191223192529564](C:\Users\Jarvis.LAPTOP-HV4II8QE\AppData\Roaming\Typora\typora-user-images\image-20191223192529564.png)
 
-   
+
+### 映射网络驱动器
+
+https://support.microsoft.com/zh-cn/help/4026635/windows-map-a-network-drive
 
 
 
