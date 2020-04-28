@@ -74,13 +74,14 @@ func InsertOperation(w http.ResponseWriter, r *http.Request) {
 	}
 
 	insertOneResult, e := c.InsertOne(context.TODO(), operation)
-	log.Println(insertOneResult.InsertedID)
 	if e != nil {
 		log.Println(e.Error())
 		rsp.Result = "ERROR"
 		rsp.Error = e.Error()
 		return
 	}
+	log.Println(insertOneResult.InsertedID)
+
 	rsp.Result = "OK"
 	rsp.InsertOneID = insertOneResult.InsertedID.(primitive.ObjectID)
 }

@@ -45,22 +45,19 @@ func MultipleInsertOperation(w http.ResponseWriter, r *http.Request) {
 	for i := 0; i < times; i++ {
 		go func() {
 			var singleresp op.InsertOperationResponse
-			e := utils.InsertOperation(&singleresp, i)
+			e := utils.InsertOperation(&singleresp, channel, insertChannel)
 			if e != nil {
-				rsp.InsertSlice = append(rsp.InsertSlice, singleresp)
-				insertSlice = append(insertSlice, singleresp)
 				return
 			}
 		}()
 	}
 
-	close(channel)
 	for i := 0; i < times; i++ {
-		if <-channel == 1 {
-			log.Println(<-channel)
-			log.Println(<-insertChannel)
-		}
+		log.Println(<-channel)
+		log.Println(<-insertChannel)
+
 	}
+	log.Println("=========new add=======")
 	log.Println("%+v\n", rsp.InsertSlice)
 	log.Println("%+v\n", insertSlice)
 

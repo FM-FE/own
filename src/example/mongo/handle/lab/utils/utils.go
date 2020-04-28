@@ -8,12 +8,9 @@ import (
 	"net/http"
 )
 
-func InsertOperation(rsp *op.InsertOperationResponse, i int) error {
+func InsertOperation(rsp *op.InsertOperationResponse, channel chan int, insertChannel chan op.InsertOperationResponse) error {
 	// channel
-	channel := make(chan int)
-	i = 1
-
-	insertChannel := make(chan op.InsertOperationResponse)
+	i := 1
 
 	client := http.Client{}
 	request, e := http.NewRequest("GET", "http://localhost:7460/operation/insert", nil)
@@ -56,6 +53,8 @@ func InsertOperation(rsp *op.InsertOperationResponse, i int) error {
 		return e
 	}
 
+	log.Println("utils>> rsp ", response)
 	channel <- i
+	insertChannel <- response
 	return nil
 }
