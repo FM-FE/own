@@ -55,7 +55,6 @@ func MultipleInsertOperation(w http.ResponseWriter, r *http.Request) {
 	for i := 0; i < times; i++ {
 		log.Println(<-channel)
 		log.Println(<-insertChannel)
-
 	}
 	log.Println("=========new add=======")
 	log.Println("%+v\n", rsp.InsertSlice)
