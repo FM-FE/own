@@ -9,15 +9,24 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
 	"net/http"
+	"prototype/operation"
 	"time"
 )
 
-type Operation struct {
-	Name        string    `json:"name,omitempty" bson:"name,omitempty"`
-	Description string    `json:"description,omitempty" bson:"description,omitempty"`
-	Step        []string  `json:"step,omitempty" bson:"step,omitempty"`
-	Time        time.Time `json:"time,omitempty" bson:"time,omitempty"`
-	Frequency   Frequency `json:"frequency,omitempty" bson:"frequency,omitempty"`
+// Insert
+type InsertOperationResponse struct {
+	utils.CommonResponse
+	InsertOneID primitive.ObjectID `json:"insert_one_id"`
+}
+
+// Find
+type FindOperationRequest struct {
+	//Operation utils.Operation
+	Name        string          `json:"name,omitempty" bson:"name,omitempty"`
+	Description string          `json:"description,omitempty" bson:"description,omitempty"`
+	Step        []string        `json:"step,omitempty" bson:"step,omitempty"`
+	Time        time.Time       `json:"time,omitempty" bson:"time,omitempty"`
+	Frequency   utils.Frequency `json:"frequency,omitempty" bson:"frequency,omitempty"`
 
 	ProgressBar float32 `json:"progress_bar,omitempty" bson:"progress_bar,omitempty"`
 	Achieved    bool    `json:"achieved,omitempty" bson:"achieved,omitempty"`
@@ -25,33 +34,14 @@ type Operation struct {
 	Weight float32 `json:"weight,omitempty" bson:"weight,omitempty"` // from 0 - 100
 
 	Atom bool `json:"atom,omitempty" bson:"atom,omitempty"`
-}
 
-type Frequency struct {
-	Oneshot   bool   `json:"oneshot,omitempty" bson:"oneshot,omitempty"`
-	Frequency string `json:"frequency,omitempty" bson:"Frequency,omitempty"`
-}
-
-type CommonResponse struct {
-	Result string `json:"result"`
-	Error  string `json:"error,omitempty"`
-}
-
-// Insert
-type InsertOperationResponse struct {
-	CommonResponse
-	InsertOneID primitive.ObjectID `json:"insert_one_id"`
-}
-
-// Find
-type FindOperationRequest struct {
-	Operation Operation
-	Limit     int64 `json:"limit" bson:"-"`
+	//
+	//Limit int64 `json:"limit" bson:"-"`
 }
 
 type FindOperationResponse struct {
-	CommonResponse
-	Operations []Operation `json:"operations"`
+	utils.CommonResponse
+	Operations []utils.Operation `json:"operations"`
 }
 
 func InsertOperation(w http.ResponseWriter, r *http.Request) {
@@ -70,12 +60,12 @@ func InsertOperation(w http.ResponseWriter, r *http.Request) {
 	log.Println("Get Collection")
 
 	// operation should be decoded from request
-	operation := Operation{
+	op := utils.Operation{
 		Name:        "op",
 		Description: "des",
 		Step:        []string{"first", "second"},
 		Time:        time.Now(),
-		Frequency: Frequency{
+		Frequency: utils.Frequency{
 			Oneshot:   false,
 			Frequency: "monthly",
 		},
@@ -85,7 +75,7 @@ func InsertOperation(w http.ResponseWriter, r *http.Request) {
 		Atom:        false,
 	}
 
-	insertOneResult, e := c.InsertOne(context.TODO(), operation)
+	insertOneResult, e := c.InsertOne(context.TODO(), op)
 	if e != nil {
 		log.Println(e.Error())
 		utils.ErrorToResponse(&rsp.CommonResponse, e)
@@ -116,7 +106,7 @@ func UpdateOperation(w http.ResponseWriter, r *http.Request) {
 }
 
 func FindOperation(w http.ResponseWriter, r *http.Request) {
-	log.Println("in UpdateOperation")
+	log.Println("in FindOperation")
 	var rsp FindOperationResponse
 	defer func() {
 		buf, e := json.Marshal(&rsp)
@@ -129,7 +119,6 @@ func FindOperation(w http.ResponseWriter, r *http.Request) {
 	client := db.GetClient("")
 	c := client.Database("test_db").Collection("test_coll")
 	log.Println("Get Collection")
-	log.Println(c)
 
 	reqbody, e := utils.AnalyzeRequest(r)
 	if e != nil {
@@ -138,7 +127,7 @@ func FindOperation(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var req FindOperationRequest
-	filter, e := utils.JsonToBson(reqbody, req)
+	filter, e := utils.JsonToBson(reqbody, &req)
 	if e != nil {
 		utils.ErrorToResponse(&rsp.CommonResponse, e)
 		return
@@ -155,7 +144,7 @@ func FindOperation(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for cursor.Next(context.Background()) {
-		var operation Operation
+		var operation utils.Operation
 		e = cursor.Decode(&operation)
 		if e != nil {
 			utils.ErrorToResponse(&rsp.CommonResponse, e)
@@ -169,6 +158,53 @@ func FindOperation(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	cursor.Close(context.Background())
+	rsp.Result = "OK"
+}
+
+func FindOneOperation(w http.ResponseWriter, r *http.Request) {
+	log.Println("in FindOneOperation")
+	var rsp FindOperationResponse
+	defer func() {
+		buf, e := json.Marshal(&rsp)
+		if e != nil {
+			w.WriteHeader(500)
+		}
+		w.Write([]byte(buf))
+	}()
+
+	client := db.GetClient("")
+	c := client.Database("test_db").Collection("test_coll")
+	log.Println("Get Collection")
+
+	reqbody, e := utils.AnalyzeRequest(r)
+	if e != nil {
+		log.Println("ERROR")
+		utils.ErrorToResponse(&rsp.CommonResponse, e)
+		return
+	}
+
+	var req FindOperationRequest
+	filter, e := utils.JsonToBson(reqbody, &req)
+	if e != nil {
+		log.Println("ERROR")
+		utils.ErrorToResponse(&rsp.CommonResponse, e)
+		// return
+	}
+	e = json.Unmarshal(reqbody, &req)
+	log.Printf("sturct req is: %+v", req)
+	if e != nil {
+		log.Println("ERROR")
+		utils.ErrorToResponse(&rsp.CommonResponse, e)
+		return
+	}
+
+	var op operation.Operation
+	e = c.FindOne(context.Background(), filter).Decode(&op)
+	if e != nil {
+		log.Println("ERROR")
+		utils.ErrorToResponse(&rsp.CommonResponse, e)
+		return
+	}
 	rsp.Result = "OK"
 }
 

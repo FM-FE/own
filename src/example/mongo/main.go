@@ -21,7 +21,9 @@ func main() {
 	// op & lab
 	router.HandleFunc("/operation/insert", op.InsertOperation).Methods("GET")
 	router.HandleFunc("/operation/insert/{_times}", lab.MultipleInsertOperation).Methods("GET")
-
+	router.HandleFunc("/operation/find", op.FindOperation).Methods("POST")
+	router.HandleFunc("/operation/find/one", op.FindOneOperation).Methods("POST")
+	
 	svr := http.Server{
 		Addr: ":7460",
 		Handler: handlers.CORS(

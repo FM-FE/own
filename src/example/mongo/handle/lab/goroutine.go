@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"example/mongo/handle/lab/utils"
 	"example/mongo/handle/op"
+	op_utils "example/mongo/handle/op/utils"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
@@ -11,7 +12,7 @@ import (
 )
 
 type MultipleInsertResponse struct {
-	op.CommonResponse
+	op_utils.CommonResponse
 	InsertSlice []op.InsertOperationResponse `json:"insert_slice"`
 }
 
