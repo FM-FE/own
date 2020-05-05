@@ -5,11 +5,10 @@ import (
 	"encoding/json"
 	"example/mongo/db"
 	"example/mongo/handle/op/utils"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
 	"net/http"
-	"prototype/operation"
 	"time"
 )
 
@@ -21,27 +20,31 @@ type InsertOperationResponse struct {
 
 // Find
 type FindOperationRequest struct {
-	//Operation utils.Operation
-	Name        string          `json:"name,omitempty" bson:"name,omitempty"`
-	Description string          `json:"description,omitempty" bson:"description,omitempty"`
-	Step        []string        `json:"step,omitempty" bson:"step,omitempty"`
-	Time        time.Time       `json:"time,omitempty" bson:"time,omitempty"`
-	Frequency   utils.Frequency `json:"frequency,omitempty" bson:"frequency,omitempty"`
-
-	ProgressBar float32 `json:"progress_bar,omitempty" bson:"progress_bar,omitempty"`
-	Achieved    bool    `json:"achieved,omitempty" bson:"achieved,omitempty"`
-
-	Weight float32 `json:"weight,omitempty" bson:"weight,omitempty"` // from 0 - 100
-
-	Atom bool `json:"atom,omitempty" bson:"atom,omitempty"`
-
-	//
-	//Limit int64 `json:"limit" bson:"-"`
+	Key   string `json:"key"`
+	Value string `json:"value"`
 }
 
 type FindOperationResponse struct {
 	utils.CommonResponse
 	Operations []utils.Operation `json:"operations"`
+}
+
+// Update
+type UpdateOperationRequest struct {
+	Filter struct {
+		Key   string `json:"key"`
+		Value string `json:"value"`
+	} `json:"filter"`
+	Update struct {
+		Key   string `json:"key"`
+		Value string `json:"value"`
+	} `json:"update"`
+}
+
+// Delete
+type DeleteOperationRequest struct {
+	Key   string `json:"key"`
+	Value string `json:"value"`
 }
 
 func InsertOperation(w http.ResponseWriter, r *http.Request) {
@@ -103,6 +106,76 @@ func UpdateOperation(w http.ResponseWriter, r *http.Request) {
 	log.Println("Get Collection")
 	log.Println(c)
 
+	var req UpdateOperationRequest
+	e := utils.StructRequest(r, &req)
+	if e != nil {
+		log.Println("ERROR")
+		utils.ErrorToResponse(&rsp.CommonResponse, e)
+		return
+	}
+
+	result, e := c.UpdateMany(
+		context.Background(),
+		bson.D{
+			{req.Filter.Key, req.Filter.Value},
+		},
+		bson.D{
+			{"$set", bson.D{
+				{req.Update.Key, req.Update.Value},
+			}},
+		},
+	)
+	if e != nil {
+		log.Println("ERROR")
+		utils.ErrorToResponse(&rsp.CommonResponse, e)
+		return
+	}
+	log.Println(result)
+	rsp.Result = "OK"
+
+}
+
+func UpdateOneOperation(w http.ResponseWriter, r *http.Request) {
+	log.Println("in UpdateOperation")
+	var rsp InsertOperationResponse
+	defer func() {
+		buf, e := json.Marshal(&rsp)
+		if e != nil {
+			w.WriteHeader(500)
+		}
+		w.Write([]byte(buf))
+	}()
+
+	client := db.GetClient("")
+	c := client.Database("test_db").Collection("test_coll")
+	log.Println("Get Collection")
+
+	var req UpdateOperationRequest
+	e := utils.StructRequest(r, &req)
+	if e != nil {
+		log.Println("ERROR")
+		utils.ErrorToResponse(&rsp.CommonResponse, e)
+		return
+	}
+	log.Printf("req is %+v", req)
+
+	result, e := c.UpdateOne(
+		context.Background(),
+		bson.D{
+			{req.Filter.Key, req.Filter.Value}},
+		bson.D{
+			{"$set", bson.D{
+				{req.Update.Key, req.Update.Value},
+			}},
+		},
+	)
+	if e != nil {
+		log.Println("ERROR")
+		utils.ErrorToResponse(&rsp.CommonResponse, e)
+		return
+	}
+	log.Printf("update result is: %+v", result)
+	rsp.Result = "OK"
 }
 
 func FindOperation(w http.ResponseWriter, r *http.Request) {
@@ -127,24 +200,22 @@ func FindOperation(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var req FindOperationRequest
-	filter, e := utils.JsonToBson(reqbody, &req)
+	e = json.Unmarshal(reqbody, &req)
+	if e != nil {
+		log.Println("ERROR")
+		utils.ErrorToResponse(&rsp.CommonResponse, e)
+		return
+	}
+	filter := bson.D{{req.Key, req.Value}}
+
+	cursor, e := c.Find(context.Background(), filter)
 	if e != nil {
 		utils.ErrorToResponse(&rsp.CommonResponse, e)
 		return
 	}
 
-	findOptions := options.Find()
-	if req.Limit != -1 {
-		findOptions.SetLimit(req.Limit)
-	}
-	cursor, e := c.Find(context.Background(), filter, findOptions)
-	if e != nil {
-		utils.ErrorToResponse(&rsp.CommonResponse, e)
-		return
-	}
-
+	var operation utils.Operation
 	for cursor.Next(context.Background()) {
-		var operation utils.Operation
 		e = cursor.Decode(&operation)
 		if e != nil {
 			utils.ErrorToResponse(&rsp.CommonResponse, e)
@@ -157,7 +228,12 @@ func FindOperation(w http.ResponseWriter, r *http.Request) {
 		utils.ErrorToResponse(&rsp.CommonResponse, e)
 		return
 	}
-	cursor.Close(context.Background())
+	e = cursor.Close(context.Background())
+	if e != nil {
+		log.Println("ERROR")
+		utils.ErrorToResponse(&rsp.CommonResponse, e)
+		return
+	}
 	rsp.Result = "OK"
 }
 
@@ -184,27 +260,63 @@ func FindOneOperation(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var req FindOperationRequest
-	filter, e := utils.JsonToBson(reqbody, &req)
-	if e != nil {
-		log.Println("ERROR")
-		utils.ErrorToResponse(&rsp.CommonResponse, e)
-		// return
-	}
 	e = json.Unmarshal(reqbody, &req)
-	log.Printf("sturct req is: %+v", req)
 	if e != nil {
 		log.Println("ERROR")
 		utils.ErrorToResponse(&rsp.CommonResponse, e)
 		return
 	}
+	filter := bson.D{{req.Key, req.Value}}
 
-	var op operation.Operation
+	var op utils.Operation
 	e = c.FindOne(context.Background(), filter).Decode(&op)
 	if e != nil {
 		log.Println("ERROR")
 		utils.ErrorToResponse(&rsp.CommonResponse, e)
 		return
 	}
+	log.Println(op)
+	rsp.Operations = append(rsp.Operations, op)
+	rsp.Result = "OK"
+}
+
+func DeleteOneOperation(w http.ResponseWriter, r *http.Request) {
+	log.Println("in UpdateOperation")
+	var rsp InsertOperationResponse
+	defer func() {
+		buf, e := json.Marshal(&rsp)
+		if e != nil {
+			w.WriteHeader(500)
+		}
+		w.Write([]byte(buf))
+	}()
+
+	client := db.GetClient("")
+	c := client.Database("test_db").Collection("test_coll")
+	log.Println("Get Collection")
+
+	var req DeleteOperationRequest
+	e := utils.StructRequest(r, &req)
+	if e != nil {
+		log.Println("ERROR")
+		utils.ErrorToResponse(&rsp.CommonResponse, e)
+		return
+	}
+	log.Printf("req is %+v", req)
+
+	result, e := c.DeleteOne(
+		context.Background(),
+		bson.D{
+			{req.Key, req.Value}},
+	)
+
+	if e != nil {
+		log.Println("ERROR")
+		utils.ErrorToResponse(&rsp.CommonResponse, e)
+		return
+	}
+	log.Printf("update result is: %+v", result)
+	log.Printf("delete count is: %d", result.DeletedCount)
 	rsp.Result = "OK"
 }
 
@@ -222,6 +334,28 @@ func DeleteOperation(w http.ResponseWriter, r *http.Request) {
 	client := db.GetClient("")
 	c := client.Database("test_db").Collection("test_coll")
 	log.Println("Get Collection")
-	log.Println(c)
 
+	var req DeleteOperationRequest
+	e := utils.StructRequest(r, &req)
+	if e != nil {
+		log.Println("ERROR")
+		utils.ErrorToResponse(&rsp.CommonResponse, e)
+		return
+	}
+	log.Printf("req is %+v", req)
+
+	result, e := c.DeleteMany(
+		context.Background(),
+		bson.D{
+			{req.Key, req.Value}},
+	)
+
+	if e != nil {
+		log.Println("ERROR")
+		utils.ErrorToResponse(&rsp.CommonResponse, e)
+		return
+	}
+	log.Printf("update result is: %+v", result)
+	log.Printf("delete count is: %d", result.DeletedCount)
+	rsp.Result = "OK"
 }

@@ -1,4 +1,4 @@
-package main
+package mongo_norestful
 
 import (
 	"encoding/json"

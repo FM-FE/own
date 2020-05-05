@@ -32,7 +32,7 @@ type Operation struct {
 type Time struct {
 	/**
 	can be nil, if Frequency.Oneshot is true
-	 */
+	*/
 	ExpectStartTime time.Time     `json:"expect_start_time"`
 	ExpectStopTime  time.Time     `json:"expect_stop_time"`
 	PredictStopTime time.Time     `json:"predict_stop_time"`
@@ -71,13 +71,13 @@ func (c *Operation) GetTimeRate() (rate float32) {
 func (c *Operation) DailyReport() {
 	/**
 	show things have been done at this day
-	 */
+	*/
 	/**
 	choose things wanna do at tomorrow
 	show progress bar
-	 */
+	*/
 	/**
 	show things have arranged
 	show progress bar
-	 */
+	*/
 }

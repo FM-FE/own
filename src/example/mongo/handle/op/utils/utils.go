@@ -65,6 +65,27 @@ func AnalyzeRequest(r *http.Request) (body []byte, e error) {
 	return
 }
 
+func StructRequest(r *http.Request, req interface{}) (e error) {
+	if r == nil {
+		return
+	}
+	log.Println("In StructRequest")
+	reqbody, e := ioutil.ReadAll(r.Body)
+	defer r.Body.Close()
+	r.Body = ioutil.NopCloser(bytes.NewBuffer(reqbody)) // make sure request.body always has value
+	if e != nil {
+		return
+	}
+	log.Println("reqbody is: ", string(reqbody))
+	e = json.Unmarshal(reqbody, &req)
+	if e != nil {
+		log.Println("ERROR")
+		return e
+	}
+	log.Printf("req is: %+v", req)
+	return
+}
+
 func ErrorToResponse(rsp *CommonResponse, e error) {
 	log.Println(">")
 	log.Println(">>> ERROR OCCUR !!!")

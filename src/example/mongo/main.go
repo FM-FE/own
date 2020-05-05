@@ -23,7 +23,11 @@ func main() {
 	router.HandleFunc("/operation/insert/{_times}", lab.MultipleInsertOperation).Methods("GET")
 	router.HandleFunc("/operation/find", op.FindOperation).Methods("POST")
 	router.HandleFunc("/operation/find/one", op.FindOneOperation).Methods("POST")
-	
+	router.HandleFunc("/operation/update/one", op.UpdateOneOperation).Methods("POST")
+	router.HandleFunc("/operation/update", op.UpdateOperation).Methods("POST")
+	router.HandleFunc("/operation/delete/one", op.DeleteOneOperation).Methods("DELETE")
+	router.HandleFunc("/operation/delete", op.DeleteOperation).Methods("DELETE")
+
 	svr := http.Server{
 		Addr: ":7460",
 		Handler: handlers.CORS(
@@ -33,6 +37,9 @@ func main() {
 	}
 
 	e := svr.ListenAndServe()
-	log.Println(e.Error())
+	if e != nil {
+		log.Println(e.Error())
+		return
+	}
 
 }
