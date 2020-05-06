@@ -63,6 +63,16 @@
 
    **注意：要在提交之前，做好 gitignore；如果已经提交了要忽略的文件，备份忽略文件后，`git reset --hard <log ID>`，回到提交之前**
 
+7. git branch
+
+   显示本地分支
+
+8. git checkout [-b] 本地分支名
+
+   切换到本地分支
+
+   加 -b 参数，创建分支并切换
+
 
 
 
@@ -93,7 +103,13 @@
 
    合并两个不相干的库，本地库和远程库
 
-   
+5. git checkout -b 本地分支名 origin/远程分支名
+
+   切换到远程分支，并且在本地同步创建分支
+
+
+
+
 
 
 
@@ -101,11 +117,25 @@
 
 ### 处理冲突
 
-git statsh 
+1. stash
 
-git pull
+   git statsh 
 
-git stash pop
+   git pull
+
+   git stash pop
+
+2. merge
+
+   git pull
+
+   决定保留和更改
+
+   重新commit，push
+
+
+
+
 
 
 
