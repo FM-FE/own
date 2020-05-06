@@ -88,6 +88,12 @@
    [添加远程仓库参考链接](<https://www.liaoxuefeng.com/wiki/896043488029600/898732864121440>)
 
    [复制公钥参考链接](<https://www.liaoxuefeng.com/wiki/896043488029600/896954117292416>)
+   
+4. git pull origin master --allow-unrelated-histories
+
+   合并两个不相干的库，本地库和远程库
+
+   
 
 
 
