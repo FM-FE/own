@@ -10,14 +10,17 @@ import (
 	"net/http"
 )
 
-const IP = "localhost"
+//const IP = "localhost"
+const IP = "db"
 const mongoURL = "mongodb://" + IP + ":27017"
 
 func GetClient(url string) (client *mongo.Client) {
 	var clientOptions *options.ClientOptions
 	if url == "" {
+		log.Println("url: ", mongoURL)
 		clientOptions = options.Client().ApplyURI(mongoURL)
 	} else {
+		log.Println("url: ", url)
 		clientOptions = options.Client().ApplyURI(url)
 	}
 

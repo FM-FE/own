@@ -1,0 +1,18 @@
+version: "3"
+services:
+  db:
+    image: mongo
+    volumes:
+      - "/data/mongo/db:/data/db"
+    ports:
+      - "27017:27017"
+    container_name: mongo
+  curd:
+    build:
+      context: ../mongo
+    image: curd
+    ports:
+      - "7460:7460"
+    container_name: curd
+    depends_on:
+      - db
