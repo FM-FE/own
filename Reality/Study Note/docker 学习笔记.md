@@ -37,8 +37,38 @@
    + $(xxxx)：将xxxx作为参数，传入docker rmi
    + awk '{print $3}'：输出第三列
 
-7. 获取某行某列
+7. docker中 -i 参数和 -t 参数
+
+   -t，表示分配一个伪终端
+   
+   -i，表示可以交互，可以从键盘输入（stdin），并且获得反馈
+   
+   
+   
+   docker exec container sh
+   
+   无返回
+   
+   docker exec -t container sh
+   
+   有一个可交互的终端，但是输入无响应
+   
+   docker exec -i container sh
+   
+   没有终端，但是输入有响应，没有格式
+   
+   docker exec -it container sh
+   
+   与正常的终端交互无差别
+   
+   
+   
+   [参考链接](https://blog.csdn.net/claram/article/details/104228727)
+   
+   
+   
+8. 获取某行某列
 
    ![image-20200120113157165](C:\Users\Jarvis.LAPTOP-HV4II8QE\AppData\Roaming\Typora\typora-user-images\image-20200120113157165.png)
+
    
-8. 
