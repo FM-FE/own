@@ -106,6 +106,18 @@
 5. git checkout -b 本地分支名 origin/远程分支名
 
    切换到远程分支，并且在本地同步创建分支
+   
+6. [将本地代码上传到远程的几种情景](https://blog.csdn.net/programmer_at/article/details/78011705)
+
+   
+
+7. `git push origin master(本地分支):v2.0(远程分支)`
+
+   将本地的master分支推送到远程的v2.0分支
+
+8. `git pull origin v2.0(远程分支):master(本地分支)`
+
+   将远程的v2.0分支下载 ( fetch ) 到本地master分支 ( merge )  
 
 
 

@@ -96,9 +96,30 @@
 
    3. 回顾大学学习的sql语句，完成基本操作
 
+
+---
+
+## 20200514
+
+1. docker compose学习，留下部署文档
+
+2. mysql
+
+   docker compose部署mysql，并留下学习文档
+
+   golang对mysql的使用，留下学习文档  [golang使用mysql](直接连接到代码)
+
+   **在部署文档后，直接附上代码链接**
+
+3. mongo
+
+   docker compose部署加密mongo，留下文档
+
+   golang对加密mongo的使用 [golang使用加密mongo](代码链接)
+
+   **在部署文档后，直接附上代码链接**
+
    
-
-
 
 
 

@@ -7,11 +7,10 @@
 ### 准备证书
 
 1. openssl genrsa -aes256 -passout pass:123456 -out server.key 1024
-
 2. openssl req -new -x509 -days 3650 -passin pass:123456 -key server.key -out server.crt \
    -subj "/C=CN/ST=Beijing/L=Beijing/O=hello/OU=dev/CN=hello.com/emailAddress=self@hello.com"
-
 3. cat server.crt server.key > server.pem
+4. cp server.pem /etc/tls/server.pem
 
 ### 下载启动mongo
 
