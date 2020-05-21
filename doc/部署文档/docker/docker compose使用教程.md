@@ -15,7 +15,7 @@ docker compose不集成在docker中，需要另外下载
 1. `curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`
 2. `chmod +x /usr/local/bin/docker-compose`
 
- ## 使用
+ ## 配置
 
 docker-compose将容器运行逻辑写进yml文件，然后用docker-compose up命令，启动compose
 
@@ -94,6 +94,14 @@ services:
       - db
 ```
 
+**启动流程**
+
+在compose配置文件目录下执行命令，`docker-compose up`
+
+**调试流程**
+
+
+
 **特别注意**
 
 在curd容器中，如果想使用mongo，那么mongo url应该写为
@@ -119,6 +127,36 @@ services:
 > 暂未验证
 
 
+
+## 命令
+
+[docker compose命令参考](https://docs.docker.com/compose/reference/overview/)
+
+**常用命令如下**
+
+1. [启动compose](https://docs.docker.com/compose/reference/up/)
+
+   docker-compose [ **-f** 指定配置yml文件 ] [ **-p** 指定项目名称，默认为yml所在目录名 ]  up  [ **-d** ]  [ 服务名 ] 
+
+   + detch模式启动
+
+     docker-compose up -d 
+
+   + 重新编译并启动
+
+     docker-compose up --build -d
+
+2. [重新编译](https://docs.docker.com/compose/reference/build/)
+
+   docker-compose build [服务名]
+
+3. [删除compose](https://docs.docker.com/compose/reference/down/)
+
+   docker-compose down [options]
+
+   + 删除因compose创建的容器和本地镜像（仅删除image字段为空的镜像）
+
+     docker-compose down --rmi local
 
 
 

@@ -10,7 +10,7 @@ services:
   curd:
     build:
       context: ../mongo
-    image: curd
+    #image: curd
     ports:
       - "7460:7460"
     container_name: curd

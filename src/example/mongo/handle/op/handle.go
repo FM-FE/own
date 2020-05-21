@@ -48,7 +48,8 @@ type DeleteOperationRequest struct {
 }
 
 func InsertOperation(w http.ResponseWriter, r *http.Request) {
-	log.Println("in CreateOperation")
+	log.Println("in InsertOperation")
+	log.Println(">> This is a {!most!} new test")
 	var rsp InsertOperationResponse
 	defer func() {
 		buf, e := json.Marshal(&rsp)
@@ -357,5 +358,26 @@ func DeleteOperation(w http.ResponseWriter, r *http.Request) {
 	}
 	log.Printf("update result is: %+v", result)
 	log.Printf("delete count is: %d", result.DeletedCount)
+	rsp.Result = "OK"
+}
+
+func DeleteDatabase(w http.ResponseWriter, r *http.Request) {
+	log.Println("in DeleteDatabase")
+	var rsp utils.CommonResponse
+	defer func() {
+		buf, e := json.Marshal(&rsp)
+		if e != nil {
+			w.WriteHeader(500)
+		}
+		w.Write([]byte(buf))
+	}()
+
+	client := db.GetClient("")
+	e := client.Database("test_db").Drop(context.Background())
+	if e != nil {
+		log.Println("ERROR")
+		utils.ErrorToResponse(&rsp, e)
+		return
+	}
 	rsp.Result = "OK"
 }

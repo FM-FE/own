@@ -27,6 +27,7 @@ func main() {
 	router.HandleFunc("/operation/update", op.UpdateOperation).Methods("POST")
 	router.HandleFunc("/operation/delete/one", op.DeleteOneOperation).Methods("DELETE")
 	router.HandleFunc("/operation/delete", op.DeleteOperation).Methods("DELETE")
+	router.HandleFunc("/operation/database", op.DeleteDatabase).Methods("DELETE")
 
 	svr := http.Server{
 		Addr: ":7460",
