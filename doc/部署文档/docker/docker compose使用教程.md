@@ -34,10 +34,11 @@ services: // service下都是compose要启动的容器
     image: dockersamples/example 
     // 镜像名
     // 没有指定build情况下
-    // 如果该镜像名存在，就用该镜像构建容器
-    // 如果该镜像名不存在，就从远程下拉镜像
+    // 如果该镜像存在，就用该镜像构建容器
+    // 如果该镜像不存在，就从远程下拉镜像
     // 指定build情况下
-    // 如果镜像不存在，就按build指定的名字给将构建的镜像命名
+    // 如果镜像不存在，就以build指定的名字给将构建镜像
+    // 如果没有image字段，创建的镜像名默认为 项目名_服务名
     build: // docker 构建镜像时的相关配置
       context: ./MySQL // dockerfile所在目录
       network: host // 指定网络模式
@@ -67,7 +68,7 @@ services: // service下都是compose要启动的容器
 
 
 
-按照官方文档的藐视，compose文件基本涵盖了dockerfile和docker run的一切参数，可以完全依靠compose部署容器
+按照官方文档的描述，compose文件基本涵盖了dockerfile和docker run的一切参数，可以完全依靠compose部署容器
 
 
 
@@ -100,7 +101,8 @@ services:
 
 **调试流程**
 
-
+1. 重新编译项目可执行文件
+2. 通过命令`docker-compose up --build -d` 或 `docker-compose build` 重新编译镜像
 
 **特别注意**
 
@@ -113,6 +115,8 @@ services:
 `mongodb://db:27017`
 
 这与docker run方式启动容器不同，docker run启动时会添加 --net=host 参数，所以其他容器连接mongo数据库，通过localhost即可
+
+而，compose将每个服务都看作是独立的，通过服务名连接访问
 
 而compose方式中的localhost，只表示本服务，可以通过服务名访问其他服务
 
