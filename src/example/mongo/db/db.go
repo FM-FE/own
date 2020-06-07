@@ -55,5 +55,4 @@ func CreateAndInsert(w http.ResponseWriter, r *http.Request) {
 			{"uom", "cm"},
 		}},
 	})
-
 }
