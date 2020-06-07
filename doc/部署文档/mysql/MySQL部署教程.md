@@ -163,14 +163,15 @@ MySQL是一种关系型数据库
 
    **方法二**：用一台可以科学上网的电脑代理docker的http/https请求
 
-   待验证
-
    [docker proxy官方链接](https://docs.docker.com/config/daemon/systemd/)
+**待验证**
+   
+   [官方链接](https://docs.docker.com/config/daemon/systemd/)
 
    [参考链接](https://blog.csdn.net/qq_42684642/article/details/85302222)
 
    
-   
+
    
 
 
