@@ -96,22 +96,21 @@
 
    3. 回顾大学学习的sql语句，完成基本操作
 
-
 ---
 
 ## 20200514
 
 1. docker compose学习，留下部署文档
 
-2. mysql
+2. [mysql](O:\own\doc\部署文档\mysql)
 
    docker compose部署mysql，并留下学习文档
 
-   golang对mysql的使用，留下学习文档  [golang使用mysql](直接连接到代码)
+   golang对mysql的使用，留下学习文档 [golang使用mysql](直接连接到代码)
 
-   **在部署文档后，直接附上代码链接**
+   
 
-3. mongo
+3. [mongo](O:\own\doc\部署文档\mongo)
 
    docker compose部署加密mongo，留下文档
 
@@ -119,7 +118,85 @@
 
    **在部署文档后，直接附上代码链接**
 
-   
+---
+
+## 20200527
+
++ [mysql](O:\own\doc\部署文档\mysql)
+
+  1. docker
+
+     + docker部署mysql
+
+       完善MySQL的操作文档
+
+     + golang完成基本curd操作
+
+       留下学习文档 [golang使用mysql](直接连接到代码)
+
+  2. compose
+
+     + docker compose部署mysql，并留下学习文档
+
++ mongo
+
+  mongo的基本操作已经完成，需要更深入的学习
+
+  实现用随机数写入数据库并测试性能
+
+  [性能测试]()
+
+  + mongo索引
+
+    什么是mongo索引
+
+    什么时候适合加索引
+
+    有什么优缺点
+
+    怎么加，怎么用
+
+---
+
+## 20200603
+
++ [mysql](O:\own\doc\部署文档\mysql)
+
+  1. docker
+
+     + docker部署mysql
+
+       完善MySQL的操作文档
+
+       **done**
+
+     + golang完成基本curd操作
+
+       留下学习文档 [golang使用mysql](直接连接到代码)
+
+  2. compose
+
+     + docker compose部署mysql，并留下学习文档
+
++ mongo
+
+  mongo的基本操作已经完成，需要更深入的学习
+
+  实现用随机数写入数据库并测试性能
+
+  [性能测试]()
+
+  + mongo索引
+
+    什么是mongo索引
+
+    什么时候适合加索引
+
+    有什么优缺点
+
+    怎么加，怎么用
+
+
 
 
 

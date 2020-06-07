@@ -189,11 +189,125 @@
 
 1. 调整2.0和3.0的部署脚本和代码，将mongo和da的IP分开
 
-2. 监控面板，迁移管理改为集群管理（gluster）
+   **done**
+
+2. 为防止阻塞，用协程启动init步骤
+
+   **done**
+
+3. nfs/smb的共享状态查询
+
+   **done**
+
+4. license授权码设置
+
+   **done**
+
+5. 删除卷挂载时（删lakefs-fuse时），判断共享
+
+   **done**
 
    
 
+6. 在smb share页面，组合外部文件系统和内部文件系统列表
 
+   
+
+   1. 外部
+
+      nas/list
+
+      后续：mount |grep /hlstor/mnt_文件系统名 | grep fuse
+
+   2. 内部
+
+      gluster/mount/list
+
+      后续：mount | grep /hlstor/文件系统名 | grep fuse
+
+      
+
+7. nas
+
+   1. 创建时，按照创建gluster文件系统的样子，启动lakefs-fuse
+   2. 创建share时，按照fuse/list/gluster的样子，判断mount，返回列表
+
+   
+
+   待定 
+
+8. 盘匣组删除失败
+
+   S3接口
+
+9. 监控面板，迁移管理改为集群管理（gluster）
+
+   由于docker无法运行systemctl命令
+
+   需要将portal改为服务方式启动
+
+---
+
+## 20200529
+
+1. nas
+
+   1. 创建时，按照创建gluster文件系统的样子，启动lakefs-fuse
+
+      问清楚那几个参数
+
+   2. 创建share时，按照fuse/list/gluster的样子，判断mount，返回列表
+
+   **done**
+
+2. 在集群文件系统列表中返回IP
+
+   **done**
+
+3. 前端对接license错误
+
+   **done**
+
+4. 修改文档
+
+   **done**
+
+   
+
+5. 需要将portal改为服务方式启动
+
+   **done**
+
+   
+
+6. 监控面板，迁移管理改为集群管理（gluster）
+
+   由于docker无法运行systemctl命令
+
+   **done**
+
+   
+
+   待定
+
+7. 盘匣组删除失败
+
+   S3接口
+
+   
+
+8. 代理gluster-rest
+
+   
+
+9. 添加license授权码制作工具
+
+   
+
+10. 单独启动lakefs-fuse接口
+
+    + 检查是否挂在成功，成功后启动lakefs-fuse
+    + 
 
 
 

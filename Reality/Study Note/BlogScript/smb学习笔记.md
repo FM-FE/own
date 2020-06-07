@@ -26,7 +26,7 @@
 
    `rpm -qa | grep samba`
 
-   ![image-20191220173022877](C:\Users\Jarvis.LAPTOP-HV4II8QE\AppData\Roaming\Typora\typora-user-images\image-20191220173022877.png)
+   ![image-20191220173022877](smb学习笔记/image-20191220173022877.png)
 
 4. 启动smb服务
 
