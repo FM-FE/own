@@ -1,0 +1,66 @@
+InitiateJob
+DescribeJob
+GetJobOutput
+
+1. 用户希望自己的文件被归档到哪个path
+
+./lakefs 
+--mount-point /mnt（S3 bucket 的本地挂载点） 
+--cleanup-interval=10 
+--transit-interval 10 
+--fast-root-path=/tank/fs（ 对方的文件系统，本机的文件路径  //  表示localhost的路径，即本路径下的文件会备份到/mut  ） 
+--t http://localhost:9000 （9100） 
+--s3-ak=accessKey 
+--s3-sk=secretKey
+--s3-bucket = archives
+
+先拷贝到S3，可能需要用户指定一个outputpath 或 location
+
+
+check：glacier的端口是9100
+
+Q：set.sh 设置的是文件还是文件夹
+A：只能设置文件，不能设置文件夹
+
+Q：设置文件 attr 后，在数据库里面会有记录，删除该条记录之后，log 中还是能看见之前设置的 id
+A：id 应该是从本机复制到数据库的，所以只要文件没变，那么 id 就不会变
+
+Q：是不是文件移动不成功和之前的设置有关，可以尝试改变 --fast-root-path 移动新文件
+A：是这样的，移动旧文件不成功，新文件，新的fast-root-path就成功了
+
+Discover：进入mount目录，就会有关于inode 1的操作执行
+
+
+传输成功状态下，inode数据库的内容
+{
+    "_id" : NumberLong(270767046),
+    "createdate" : ISODate("2019-01-04T01:30:46.750Z"),
+    "expiredate" : ISODate("2019-01-04T01:31:01.104Z"),
+    "expireaction" : "migrate",
+    "state" : 4,
+    "size" : NumberLong(11),
+    "md5sum" : "46f278fe2c313cfd3a623c76b9336539",
+    "restoredate" : null,
+    "backupdate" : ISODate("2019-01-04T01:31:03.375Z"),
+    "statedate" : ISODate("2019-01-04T01:31:13.370Z")
+}
+
+
+./lakefs --tier-type=glacier --mount-point=/mount --fast-root-path=/lakefs/fast-glacier --cleanup-interval=10 --transit-interval=10 --admin-listen-addr=http://10.150.30.103:5000 --glacier-ak=EUHCFOPFMCDK6EJKVL84 
+--glacier-sk=opzqVUUNhDMN5zzoV7koUlBHCGPMkPNad1QLk2qW --glacier-vault=103 --glacier-account=103 
+--debug 1 --glacier-endpoint=http://10.150.30.103:9100
+
+./start.sh --tier-type=das3 --fs-name=default --fast-root-path=/lakefs-glacier/fast/1.txt --mount-point=/lakefs-glacier/mount --gid=0 --uid=0 --cleanup-interval=10 --transit-interval=10   --s3-endpoint=http://10.150.30.103:9000 --s3-ak=AKIAIOSFODNN7EXAMPLE --s3-sk=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY --debug 1
+
+
+docker ps
+docker logs -f dafs
+docker service ls
+
+
+./lakefs --tier-type=das3 --mount-point /root/mnt/ --fast-root-path=/root/fast/ --cleanup-interval=10 --transit-interval=10 --admin-listen-addr=http://10.2.174.54:5000 --s3-endpoint http://123.177.21.80:8004 --s3-ak system --s3-sk 123456 --s3-bucket a12345
+
+
+
+
+
