@@ -16,7 +16,6 @@ func main() {
 
 	// sample
 	router.HandleFunc("/first-mysql", db.ListTask).Methods("POST")
-	// op & lab
 
 	svr := http.Server{
 		Addr: ":7461",
