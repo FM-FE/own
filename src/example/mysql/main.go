@@ -16,6 +16,7 @@ func main() {
 
 	// sample
 	router.HandleFunc("/first-mysql", db.ListTask).Methods("POST")
+	router.HandleFunc("/task/insert", db.InsertTask).Methods("POST")
 
 	svr := http.Server{
 		Addr: ":7461",

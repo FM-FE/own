@@ -76,9 +76,9 @@ MySQL是一种关系型数据库
 8. 插入数据
 
    ```sql
-       INSERT INTO table_name(column1,column2...)
-       VALUES (value1,value2,...),
-              (value1,value2,...);
+   INSERT INTO table_name(column1,column2...)
+   VALUES (value1,value2,...),
+          (value1,value2,...);
    ```
 
 9. 修改数据
@@ -93,11 +93,11 @@ MySQL是一种关系型数据库
 
 10. 删除数据
 
-   ```sql
-   DELETE FROM table_name 
-   WHERE
-       columnX = valueX;
-   ```
+    ```sql
+    DELETE FROM table_name 
+    WHERE
+        columnX = valueX;
+    ```
 
 11. 删除数据库
 
