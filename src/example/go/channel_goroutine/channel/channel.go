@@ -1,8 +1,8 @@
 package main
 
 import (
-	"example/go/channel_goroutineine/channel/ch1"
-	"example/go/channel_goroutineine/channel/ch2"
+	"example/go/channel_goroutine/channel/ch1"
+	"example/go/channel_goroutine/channel/ch2"
 	"log"
 )
 

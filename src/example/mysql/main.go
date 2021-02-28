@@ -2,6 +2,7 @@ package main
 
 import (
 	"example/mysql/db"
+	board "example/mysql/db/message_board"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"log"
@@ -14,9 +15,20 @@ func main() {
 	log.Println("In mysql_basic")
 	router := mux.NewRouter()
 
-	// sample
+	// task sample
 	router.HandleFunc("/first-mysql", db.ListTask).Methods("POST")
-	// op & lab
+	router.HandleFunc("/task/insert", db.InsertTask).Methods("POST")
+
+	// message board
+	// login & register
+	router.HandleFunc("/login", board.Login).Methods("POST")
+	router.HandleFunc("/register", board.Login).Methods("POST")
+
+	// article 
+	router.HandleFunc("/article", board.Login).Methods("POST")
+
+	// comment
+	router.HandleFunc("/comment", board.Login).Methods("POST")
 
 	svr := http.Server{
 		Addr: ":7461",

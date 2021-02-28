@@ -18,7 +18,7 @@ MySQL是一种关系型数据库
 
 可以通过`mysql -uroot -p`进入容器，通过命令行操作MySQL
 
-![image-20200603235658222](MySQL部署教程/image-20200603235658222.png)
+![MySQL登录](MySQL部署教程/image-20200603235658222.png)
 
 ### MySQL基本命令
 
@@ -27,7 +27,7 @@ MySQL是一种关系型数据库
 1. 创建数据库
 
    ```sql
-   CREATE DATABASE database_name;`
+   CREATE DATABASE database_name;
    ```
 
 2. 显示数据库列表
@@ -48,7 +48,7 @@ MySQL是一种关系型数据库
    CREATE TABLE IF NOT EXISTS table_name (
      column1 INT(11) NOT NULL AUTO_INCREMENT,
      column2 VARCHAR(45) DEFAULT NULL,
-     PRIMARY KEY (task_id)
+     PRIMARY KEY (column1)
    );
    ```
 
@@ -76,9 +76,9 @@ MySQL是一种关系型数据库
 8. 插入数据
 
    ```sql
-       INSERT INTO table_name(column1,column2...)
-       VALUES (value1,value2,...),
-              (value1,value2,...);
+   INSERT INTO table_name(column1,column2...)
+   VALUES (value1,value2,...),
+          (value1,value2,...);
    ```
 
 9. 修改数据
@@ -93,11 +93,11 @@ MySQL是一种关系型数据库
 
 10. 删除数据
 
-   ```sql
-   DELETE FROM table_name 
-   WHERE
-       columnX = valueX;
-   ```
+    ```sql
+    DELETE FROM table_name 
+    WHERE
+        columnX = valueX;
+    ```
 
 11. 删除数据库
 
@@ -115,7 +115,9 @@ MySQL是一种关系型数据库
 
 
 
+## RESTful API启动
 
+[执行rebuild_container.sh](代码链接)
 
 
 
